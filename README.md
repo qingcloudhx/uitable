@@ -59,7 +59,7 @@ Bio:      Alan was a British pioneering computer scientist, mathematician, logic
 ## Installation
 
 ```
-$ go get -v github.com/gosuri/uitable
+$ go get -v github.com/qingcloudhx/uitable
 ```
 
 
