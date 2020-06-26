@@ -78,7 +78,7 @@ func (t *Table) UpdateRow(key string, data ...interface{}) *Table {
 func (t *Table) FindRow(key string) *Row {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
-	for k, v := range t.Rows {
+	for _, v := range t.Rows {
 		if v.Key == key {
 			return v
 		}
