@@ -42,12 +42,48 @@ func New() *Table {
 }
 
 // AddRow adds a new row to the table
-func (t *Table) AddRow(data ...interface{}) *Table {
+func (t *Table) AddRow(key string, data ...interface{}) *Table {
 	t.mtx.Lock()
 	defer t.mtx.Unlock()
-	r := NewRow(data...)
+	r := NewRow(key, data...)
 	t.Rows = append(t.Rows, r)
 	return t
+}
+
+// AddRow adds a new row to the table
+func (t *Table) DelRow(key string, data ...interface{}) *Table {
+	t.mtx.Lock()
+	defer t.mtx.Unlock()
+	for k, v := range t.Rows {
+		if v.Key == key {
+			t.Rows = append(t.Rows[:k], t.Rows[k+1:]...)
+		}
+	}
+	return t
+}
+
+// AddRow adds a new row to the table
+func (t *Table) UpdateRow(key string, data ...interface{}) *Table {
+	t.mtx.Lock()
+	defer t.mtx.Unlock()
+	for k, v := range t.Rows {
+		if v.Key == key {
+			t.Rows[k] = NewRow(key, data...)
+		}
+	}
+	return t
+}
+
+// AddRow adds a new row to the table
+func (t *Table) FindRow(key string) *Row {
+	t.mtx.Lock()
+	defer t.mtx.Unlock()
+	for k, v := range t.Rows {
+		if v.Key == key {
+			return v
+		}
+	}
+	return nil
 }
 
 // Bytes returns the []byte value of table
@@ -104,6 +140,7 @@ func (t *Table) String() string {
 
 // Row represents a row in a table
 type Row struct {
+	Key string
 	// Cells is the group of cell for the row
 	Cells []*Cell
 
@@ -112,8 +149,8 @@ type Row struct {
 }
 
 // NewRow returns a new Row and adds the data to the row
-func NewRow(data ...interface{}) *Row {
-	r := &Row{Cells: make([]*Cell, len(data))}
+func NewRow(key string, data ...interface{}) *Row {
+	r := &Row{Key: key, Cells: make([]*Cell, len(data))}
 	for i, d := range data {
 		r.Cells[i] = &Cell{Data: d}
 	}
