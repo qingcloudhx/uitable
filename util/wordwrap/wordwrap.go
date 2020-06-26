@@ -5,7 +5,7 @@ import (
 	"bytes"
 	"unicode"
 
-	"github.com/gosuri/uitable/util/strutil"
+	"github.com/qingcloudhx/uitable/util/strutil"
 )
 
 // WrapString wraps the given string within lim width in characters.

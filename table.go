@@ -7,8 +7,8 @@ import (
 	"sync"
 
 	"github.com/fatih/color"
-	"github.com/gosuri/uitable/util/strutil"
-	"github.com/gosuri/uitable/util/wordwrap"
+	"github.com/qingcloudhx/uitable/util/strutil"
+	"github.com/qingcloudhx/uitable/util/wordwrap"
 )
 
 // Separator is the default column seperator
